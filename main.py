@@ -17,8 +17,8 @@ def readCsv():
 
     """
     ADE = pd.read_csv("fichier_separe.csv", delimiter=";", encoding="ISO-8859-1", usecols=[1, 4, 5])
-    print(ADE)
-    print(ADE["TD"].unique())
+    #print(ADE)
+    #print(ADE["TD"].unique())
     return ADE
 
 def transformTp(ADE):
@@ -45,7 +45,7 @@ def transformTp(ADE):
                 ADE.loc[int(ligne), "TD"] = "TDB" #TP3 et TP4 en TDB
             else:
                 ADE.loc[int(ligne), "TD"] = "TDC" #TP5 en TDC
-    print(ADE["TD"].unique())
+    #print(ADE["TD"].unique())
     return ADE
     
 def getTd(nomTd:str, ADE):
@@ -169,26 +169,16 @@ def affichage(listeDates):
         print(f" **** \n Matière: {listeDates[i]['Matière']} \n Date de début: {listeDates[i]['DateDébut']} \n Date de fin : {listeDates[i]['DateFin']} \n **** \n")
 
 
-
-def main(nomTd):
-    """
-    fonction qui fait les appels de fonction et permet d'avoir le résultat final
-
-    Parameters
-    ----------
-    nomTd : TYPE
-        nom du TD dont on veut les dates de début et de fin
-
-    Returns
-    -------
-    None.
-
-    """
-    ADE = transformTp(readCsv()) #on lit le csv en changeant les TP par les TD
-    ADE = getTd(nomTd, ADE) #on garde les cours du TD demandé
-    listeMatiere = getMatières(ADE) #on fait la liste des matières
-    listeDates = construireListeDates(ADE, listeMatiere) #on construit la liste des dictionnaires avec les dates
+nomTd = input("De quel TD voulez vous les dates de début et de fin des matières ? ")
+while nomTd not in ["TDA", "TDB", "TDC"]:
+    print("Ce TD n'est pas valide.")
+    nomTd = input("De quel TD voulez vous les dates de début et de fin des matières ? ")
     
-    affichage(listeDates) #on affiche le tout  
+ADE = transformTp(readCsv()) #on lit le csv en changeant les TP par les TD
+ADE = getTd(nomTd, ADE) #on garde les cours du TD demandé
+listeMatiere = getMatières(ADE) #on fait la liste des matières
+listeDates = construireListeDates(ADE, listeMatiere) #on construit la liste des dictionnaires avec les dates
+    
+affichage(listeDates) #on affiche le tout  
 
-main("TDB")
+PEUT ETRE FAIRE UN TRUC QUI FAIT UN JOLIE AFFICHAGE MAIS BON C4EST PAS SP2CIALEMENT DEMAND2 DONC OSEF UN PEU
