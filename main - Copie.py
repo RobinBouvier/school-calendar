@@ -23,7 +23,7 @@ def readCsv():
 
 def transformTp(ADE):
     """
-    la fonction transforme les ligne avec un TP en un TD
+    la fonction transforme les cours qui ont comme classe un TP en cours avec un TD 
 
     Parameters
     ----------
@@ -37,14 +37,14 @@ def transformTp(ADE):
 
     """
     for ligne in range(len(ADE)):  #on itère sur toutes les lignes du DataFrame
-        #si la colonne est un TP, on le change par le TD auquel il appartient
+        #si la colonne est un TP, on le change par un TD
         if ADE.loc[int(ligne), "TD"] in ["TP1", "TP2", "TP3", "TP4", "TP5"]:
             if ADE.loc[int(ligne), "TD"] == "TP1" or ADE.loc[int(ligne), "TD"] == "TP2":
-                ADE.loc[int(ligne), "TD"] = "TDA" #TP1 et TP2 en TDA
+                ADE.loc[int(ligne), "TD"] = "TDA"
             elif ADE.loc[int(ligne), "TD"] == "TP3" or ADE.loc[int(ligne), "TD"] == "TP4":
-                ADE.loc[int(ligne), "TD"] = "TDB" #TP3 et TP4 en TDB
+                ADE.loc[int(ligne), "TD"] = "TDB"
             else:
-                ADE.loc[int(ligne), "TD"] = "TDC" #TP5 en TDC
+                ADE.loc[int(ligne), "TD"] = "TDC"
     print(ADE["TD"].unique())
     return ADE
     
@@ -79,7 +79,7 @@ def getTd(nomTd:str, ADE):
     ADE.reset_index(drop=True, inplace=True) #on remet les indices de 1 à n
     return ADE
 
-getTd("TDB", readCsv())
+getTd("TDB", transformTp(readCsv()))
 
 def getMatières(ADE):
     """
@@ -191,4 +191,4 @@ def main(nomTd):
     
     affichage(listeDates) #on affiche le tout  
 
-main("TDB")
+#main("TDB")
